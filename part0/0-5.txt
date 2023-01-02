@@ -1,0 +1,44 @@
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa
+
+server->browser: HTTP 200/304 (OK, responds with spa HTML)
+
+note over browser:
+a <link> element in the notes HTML code
+causes the browser to fetch main.css
+end note
+
+browser->server: HTTP GET /exampleapp/main.css
+
+server->browser: 200/304 (OK, responds with main.css, ".container {...")
+
+note over browser:
+a <script> element in the notes HTML
+code causes the browser to fetch spa.js
+end note
+
+browser->server: HTTP GET /exampleapp/spa.js
+
+server->browser: 200/304 (OK, responds with spa.js, "var notes = []...")
+
+note over browser:
+browser starts executing spa.js which contains:
+"xhttp.open("GET", "/exampleapp/data.json", true)"
+end note
+
+browser->server: HTTP GET /exampleapp/data.json
+
+server->browser: 200/304 (OK, responds with data.json, "0: Object{content: "whateeever", date:"2022-12-28T...")
+
+note over browser:
+in the browser's spa.js, this callback is executed:
+
+xhttp.onreadystatechange = function () {
+\ \ if (this.readyState == 4 && this.status == 200) {
+\ \ \ \ notes = JSON.parse(this.responseText)
+\ \ \ \ redrawNotes()
+\ \ }
+}
+
+and the notes are drawn
+end note
+

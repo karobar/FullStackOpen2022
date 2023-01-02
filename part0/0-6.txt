@@ -1,0 +1,9 @@
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa\nwith request JSON "{"content":"hello beautiful people on the internet!","date":"2022-12-31T21:37:13.985Z"}"
+server->browser: 201 (Created) with response JSON "{"message":"note created"}"
+note over browser:
+browser creates a new note
+which replicates the one sent to the server
+and updates its "notes" global var
+with the copy
+purely on the client side
+end note
